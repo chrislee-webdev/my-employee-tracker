@@ -1,95 +1,61 @@
 const mysql = require('mysql2');
-const inquirer = require('inquirer');
+const express = require('express');
+const PORT = process.env.PORT || 3001;
+const app = express();
 
-//Connect to DB
-// const db = mysql.createConnection({
-//     host: 'loalhost',
-//     user: '',
-//     password: '',
-//     database: 'employees'
-// },
-// console.log('Connected to employees database.')
-// )
+// Express middleware
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
-//Initial prompt
-const promptUser = () => {
-    return inquirer.prompt([
-        {
-            type: 'list',
-            name: 'mainMenu',
-            message: 'What would you like to do?',
-            choices: [
-                'View all departments',
-                'View all roles',
-                'View all employees',
-                'Add a department',
-                'Add a role',
-                'Add an employee',
-                'Update an employee role'
-            ]
-        },
-    ]).then((answers) => {
-        const { choices } = answers;
-        if (choices === 'View all departments') {
-            viewAllDepartments();
-        }
-        if (choices === 'View all roles') {
-            viewAllRoles();
-        }
-        if (choices === 'View all employees') {
-            viewAllEmployees();
-        }
-        if (choices === 'Add a department') {
-            addDepartment();
-        }
-        if (choices === 'Add a role') {
-            addRole();
-        }
-        if (choices === 'Add an employee') {
-            addEmployee();
-        }
-        if (choices === 'Update an employee role') {
-            updateEmployeeRole();
-        }
-    })
-}
+// Connect to database
+const db = mysql.createConnection(
+    {
+        host: 'localhost',
+        // Username
+        user: 'root',
+        // Password
+        password: 'meiling14',
+        database: 'employees'
+    },
+    console.log('Connected to the employees database.')
+);
 
-//viewAllDepartments
-const viewAllDepartments = () => {
-    db.query(`SELECT * FROM department`, (err, row) => {
-
+app.get('/', (req, res) => {
+    res.json({
+        message: 'Hello World'
     });
-}
-//viewAllRoles
-const viewAllRoles = () => {
-    db.query(`SELECT * FROM role`)
-}
-//viewAllEmployees
-const viewAllEmployees = () => {
-    db.query(`SELECT * FROM employee`);
-}
-//addDepartment
-const addDepartment = () => {
-    prompt([
-        {
-            type: 'input',
-            name: 'departmentName',
-            message: 'Please enter the name of the department'
+});
+
+// Get all departments
+app.get('/api/department', (req, res) => {
+    const sql = `SELECT * FROM department`;
+    db.query(sql, (err, rows) => {
+        if (err) {
+            res.status(500).json({ error: err.message});
+            return;
         }
-    ])
-}
-//addRole
-const addRole = () => {
+        res.json({
+            message: 'success',
+            data: rows
+        });
+    });
+});
 
-}
-//addEmployee
-const addEmployee = () => {
+// Create a department
+const sql = `INSERT INTO department (id, name) VALUES (?, ?)`;
+const params = [2, 'Information Tech'];
+db.query(sql, params, (err, result) => {
+    if (err) {
+    console.log(err);
+    }
+    console.log(result);
+})
 
-}
-//updateEmployeeRole
-const updateEmployeeRole = () => {
+// Default response for any other request (Not Found)
+app.use((req, res) => {
+    res.statusCode(404).end();
+});
 
-}
-
-//Call function
-promptUser();
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
