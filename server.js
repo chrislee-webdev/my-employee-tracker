@@ -37,13 +37,25 @@ db.query(`SELECT * FROM employees WHERE id = 1`, (err, row) => {
     console.log(row);
 });
 
-//Delete an employee
-db.querry(`DELETE FROM employee WHERE id = ?`, 1, (err, result) => {
+//Create an employee
+const sql = `INSERT INTO employee (id, first_name, last_name, VALUES (?, ?, ?, ?)`;
+
+db.query(sql, params, (err, result) => {
     if (err) {
-        console.log(err)
+        console.log(err);
     }
     console.log(result);
-});
+})
+
+
+
+//Delete an employee
+// db.query(`DELETE FROM employee WHERE id = ?`, 1, (err, result) => {
+//     if (err) {
+//         console.log(err)
+//     }
+//     console.log(result);
+// });
 
 app.use((req, res) => {
     res.status(404).end();
