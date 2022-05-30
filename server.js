@@ -29,26 +29,73 @@ app.get('/', (req, res) => {
 // Get all departments
 app.get('/api/department', (req, res) => {
     const sql = `SELECT * FROM department`;
-    db.query(sql, (err, rows) => {
+    db.query(sql, (err, row) => {
         if (err) {
             res.status(500).json({ error: err.message});
             return;
         }
         res.json({
             message: 'success',
-            data: rows
+            data: row
+        });
+    });
+});
+
+//Get all roles
+app.get('/api/role', (req, res) => {
+    const sql = `SELECT * FROM role`;
+    db.query(sql, (err, row) => {
+        if (err) {
+            res.status(500).json({ error: err.message});
+            return;
+        }
+        res.json({
+            message: 'success',
+            data: row
+        });
+    });
+});
+
+//Get all employees
+app.get('/api/employee', (req, res) => {
+    const sql = `SELECT * FROM employee`;
+    db.query(sql, (err, row) => {
+        if (err) {
+            res.status(500).json({ error: err.message});
+            return;
+        }
+        res.json({
+            message: 'success',
+            data: row
         });
     });
 });
 
 // Create a department
 const sql = `INSERT INTO department (id, name) VALUES (?, ?)`;
-const params = [2, 'Information Tech'];
-db.query(sql, params, (err, result) => {
+db.query(sql, (err, result) => {
     if (err) {
     console.log(err);
     }
     console.log(result);
+})
+
+// Create a role
+const sql = `INSERT INTO role (id, title, salary, department_id) VALUES (?, ?, ? ,?)`;
+db.query(sql, (err, result) => {
+    if (err) {
+        console.log(err);
+    }
+    console.log(result);
+})
+
+// Create an employee
+const sql = `INSERT INTO employee (id, first_name, last_name, role_id, manager_id)`;
+db.query(sql, (err, result) => {
+    if (err) {
+        console.log(err);
+    }
+    console.log(result)
 })
 
 // Default response for any other request (Not Found)
