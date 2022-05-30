@@ -1,5 +1,6 @@
 const mysql = require('mysql2');
 const express = require('express');
+const inquirer = require('inquirer');
 const PORT = process.env.PORT || 3001;
 const app = express();
 
@@ -25,6 +26,27 @@ app.get('/', (req, res) => {
         message: 'Hello World'
     });
 });
+
+// Main menu
+const mainMenu = () => {
+    return inquirer.prompt([
+        {
+            type: 'list',
+            name: 'mainMenu',
+            message: 'Please select from the following options:',
+            choices: [
+                'View all departments',
+                'View all roles',
+                'View all employees',
+                'Add a department',
+                'Add a role',
+                'Add an employee',
+                'Update an employee role'
+            ]
+        }
+    ])
+}
+mainMenu();
 
 // Get all departments
 app.get('/api/department', (req, res) => {
