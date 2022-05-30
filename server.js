@@ -38,13 +38,35 @@ const mainMenu = () => {
                 'View all departments',
                 'View all roles',
                 'View all employees',
-                'Add a department',
-                'Add a role',
-                'Add an employee',
-                'Update an employee role'
+                'Add department',
+                'Add role',
+                'Add employee',
+                'Update employee role'
             ]
         }
-    ])
+    ]).then((select) => {
+        if (select.mainMenu === 'View all departments') {
+            viewAllDepartments();
+        }
+        if (select.mainMenu === 'View all roles') {
+            viewAllRoles();
+        }
+        if (select.mainMenu === 'View all employees') {
+             viewAllEmployees();
+        }
+        if (select.mainMenu === 'Add department') {
+            addDepartment();
+        }
+        if (select.mainMenu === 'Add role') {
+            addRole();
+        }
+        if (select.mainMenu === 'Add employee') {
+            addEmployee();
+        }
+        if (select.mainMenu === 'Update employee role') {
+            updateEmployeeRole();
+        }
+    })   
 }
 mainMenu();
 
