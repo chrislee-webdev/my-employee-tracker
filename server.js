@@ -2,14 +2,14 @@ const mysql = require('mysql2');
 const inquirer = require('inquirer');
 
 //Connect to DB
-const db = mysql.createConnection({
-    host: 'loalhost',
-    user: '',
-    password: '',
-    database: 'employees'
-},
-console.log('Connected to employees database.')
-)
+// const db = mysql.createConnection({
+//     host: 'loalhost',
+//     user: '',
+//     password: '',
+//     database: 'employees'
+// },
+// console.log('Connected to employees database.')
+// )
 
 //Initial prompt
 const promptUser = () => {
