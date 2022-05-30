@@ -21,12 +21,6 @@ const db = mysql.createConnection(
     console.log('Connected to the employees database.')
 );
 
-app.get('/', (req, res) => {
-    res.json({
-        message: 'Hello World'
-    });
-});
-
 // Main menu
 const mainMenu = () => {
     return inquirer.prompt([
@@ -69,7 +63,7 @@ const mainMenu = () => {
     })   
 }
 
-// Get all departments
+// View all departments
 const viewAllDepartments = () => {
     const sql = `SELECT * FROM department`;
     db.query(sql, (err, row) => {
@@ -82,7 +76,7 @@ const viewAllDepartments = () => {
     };
 
 
-//Get all roles
+// View all roles
 const viewAllRoles = () => {
     const sql = `SELECT * FROM role`;
     db.query(sql, (err, row) => {
@@ -94,7 +88,7 @@ const viewAllRoles = () => {
         });
     };
 
-//Get all employees
+// View all employees
 const viewAllEmployees = () => {
     const sql = `SELECT * FROM employee`;
     db.query(sql, (err, row) => {
@@ -109,16 +103,55 @@ const viewAllEmployees = () => {
 
 //Create a department
 const addDepartment = () => {
-    const sql = `INSERT INTO department (id, name) VALUES (?, ?)`;
-    db.query(sql, (err, result) => {
-        if (err) {
-        console.log(err);
+    return inquirer.prompt([
+        {
+            type: 'input',
+            name: 'id',
+            message: 'What is the department id?'
+        },
+        {
+            type: 'input',
+            name: 'departmentName',
+            message: 'What is the name of the department?'
         }
-        console.log(result);
-})
-}
+    ]).then((answer) => {
+        const sql = `INSERT INTO department (id,name) VALUES (?, ?)`;
+        db.query(sql, answer.id, 
+            answer.departmentName, (err, answer) => {
+            if (err) {
+            console.log(err);
+            }
+            console.log('Department created');
+            })
+            mainMenu();
+        })
+    }
 
 // // Create a role
+const addRole = () => {
+    return inquirer.prompt([
+        {
+            type: 'input',
+            name: 'roleId',
+            message: 'What is the roleId?'
+        },
+        {
+            type: 'input',
+            name: 'roleTitle',
+            message: 'What is the name of the role?'
+        },
+        {
+            type: 'input',
+            name: 'salary',
+            message: 'What is the salary for the role?'
+        },
+        {
+            type: 'input',
+            name: 'roleDepartment',
+            message: 'What is the departmentId for this?'
+        },
+    ])
+}
 // const sql = `INSERT INTO role (id, title, salary, department_id) VALUES (?, ?, ? ,?)`;
 // db.query(sql, (err, result) => {
 //     if (err) {
