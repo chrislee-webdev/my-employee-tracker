@@ -56,19 +56,27 @@ const promptUser = () => {
 
 //viewAllDepartments
 const viewAllDepartments = () => {
-    let sql = `SELECT * FROM department`;
+    db.query(`SELECT * FROM department`, (err, row) => {
+
+    });
 }
 //viewAllRoles
 const viewAllRoles = () => {
-    let sql = `SELECT * FROM role`;
+    db.query(`SELECT * FROM role`)
 }
 //viewAllEmployees
 const viewAllEmployees = () => {
-    let sql = `SELECT * FROM employee`;
+    db.query(`SELECT * FROM employee`);
 }
 //addDepartment
 const addDepartment = () => {
-
+    prompt([
+        {
+            type: 'input',
+            name: 'departmentName',
+            message: 'Please enter the name of the department'
+        }
+    ])
 }
 //addRole
 const addRole = () => {
