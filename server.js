@@ -68,85 +68,82 @@ const mainMenu = () => {
         }
     })   
 }
-mainMenu();
 
 // Get all departments
-app.get('/api/department', (req, res) => {
+const viewAllDepartments = () => {
     const sql = `SELECT * FROM department`;
     db.query(sql, (err, row) => {
         if (err) {
             res.status(500).json({ error: err.message});
             return;
         }
-        res.json({
-            message: 'success',
-            data: row
+        console.table(row)
         });
-    });
-});
+    };
+
 
 //Get all roles
-app.get('/api/role', (req, res) => {
+const viewAllRoles = () => {
     const sql = `SELECT * FROM role`;
     db.query(sql, (err, row) => {
         if (err) {
             res.status(500).json({ error: err.message});
             return;
         }
-        res.json({
-            message: 'success',
-            data: row
+        console.table(row);
         });
-    });
-});
+    };
 
 //Get all employees
-app.get('/api/employee', (req, res) => {
+const viewAllEmployees = () => {
     const sql = `SELECT * FROM employee`;
     db.query(sql, (err, row) => {
         if (err) {
             res.status(500).json({ error: err.message});
             return;
         }
-        res.json({
-            message: 'success',
-            data: row
+        console.table(row);
         });
-    });
-});
+    };
 
-// Create a department
-const sql = `INSERT INTO department (id, name) VALUES (?, ?)`;
-db.query(sql, (err, result) => {
-    if (err) {
-    console.log(err);
-    }
-    console.log(result);
-})
 
-// Create a role
-const sql = `INSERT INTO role (id, title, salary, department_id) VALUES (?, ?, ? ,?)`;
-db.query(sql, (err, result) => {
-    if (err) {
+//Create a department
+const addDepartment = () => {
+    const sql = `INSERT INTO department (id, name) VALUES (?, ?)`;
+    db.query(sql, (err, result) => {
+        if (err) {
         console.log(err);
-    }
-    console.log(result);
+        }
+        console.log(result);
 })
+}
 
-// Create an employee
-const sql = `INSERT INTO employee (id, first_name, last_name, role_id, manager_id)`;
-db.query(sql, (err, result) => {
-    if (err) {
-        console.log(err);
-    }
-    console.log(result)
-})
+// // Create a role
+// const sql = `INSERT INTO role (id, title, salary, department_id) VALUES (?, ?, ? ,?)`;
+// db.query(sql, (err, result) => {
+//     if (err) {
+//         console.log(err);
+//     }
+//     console.log(result);
+// })
+
+// // Create an employee
+// const sql = `INSERT INTO employee (id, first_name, last_name, role_id, manager_id)`;
+// db.query(sql, (err, result) => {
+//     if (err) {
+//         console.log(err);
+//     }
+//     console.log(result)
+// })
+
+// Functions
+mainMenu();
 
 // Default response for any other request (Not Found)
-app.use((req, res) => {
-    res.statusCode(404).end();
-});
+// app.use((req, res) => {
+//     res.statusCode(404).end();
+// });
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//     console.log(`Server running on port ${PORT}`);
+// });
