@@ -56,15 +56,15 @@ const promptUser = () => {
 
 //viewAllDepartments
 const viewAllDepartments = () => {
-
+    let sql = `SELECT * FROM department`;
 }
 //viewAllRoles
 const viewAllRoles = () => {
-
+    let sql = `SELECT * FROM role`
 }
 //viewAllEmployees
 const viewAllEmployees = () => {
-
+    let sql = `SELECT * FROM employee`
 }
 //addDepartment
 const addDepartment = () => {
