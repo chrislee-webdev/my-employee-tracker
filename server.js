@@ -1,6 +1,7 @@
 const mysql = require('mysql2');
 const express = require('express');
 const inquirer = require('inquirer');
+const e = require('express');
 const PORT = process.env.PORT || 3001;
 const app = express();
 
@@ -71,7 +72,8 @@ const viewAllDepartments = () => {
             res.status(500).json({ error: err.message});
             return;
         }
-        console.table(row)
+        console.table(row);
+        mainMenu();
         });
     };
 
@@ -85,6 +87,7 @@ const viewAllRoles = () => {
             return;
         }
         console.table(row);
+        mainMenu();
         });
     };
 
@@ -97,6 +100,7 @@ const viewAllEmployees = () => {
             return;
         }
         console.table(row);
+        mainMenu();
         });
     };
 
@@ -116,8 +120,8 @@ const addDepartment = () => {
         }
     ]).then((answer) => {
         const sql = `INSERT INTO department (id,name) VALUES (?, ?)`;
-        db.query(sql, answer.id, 
-            answer.departmentName, (err, answer) => {
+        db.query(sql, [answer.id, 
+            answer.departmentName], (err, results) => {
             if (err) {
             console.log(err);
             }
@@ -150,24 +154,57 @@ const addRole = () => {
             name: 'roleDepartment',
             message: 'What is the departmentId for this?'
         },
-    ])
+    ]).then((answer) => {
+        const sql = `INSERT INTO role (id, title, salary, department_id) VALUES (?, ?, ?, ?)`
+        db.query(sql, [answer.roleId, answer.roleTitle, answer.salary, answer.roleDepartment], (err, results) => {
+            if (err) {
+                console.log(err);
+            }
+            console.log('Role created')
+        }) 
+        mainMenu();
+    })
 }
-// const sql = `INSERT INTO role (id, title, salary, department_id) VALUES (?, ?, ? ,?)`;
-// db.query(sql, (err, result) => {
-//     if (err) {
-//         console.log(err);
-//     }
-//     console.log(result);
-// })
 
-// // Create an employee
-// const sql = `INSERT INTO employee (id, first_name, last_name, role_id, manager_id)`;
-// db.query(sql, (err, result) => {
-//     if (err) {
-//         console.log(err);
-//     }
-//     console.log(result)
-// })
+// Create an employee
+const addEmployee = () => {
+    return inquirer.prompt([
+        {
+            type: 'input',
+            name: 'employeeId',
+            message: 'Please enter employee ID'
+        },
+        {
+            type: 'input',
+            name: 'firstName',
+            message: 'Please enter the first name of the employee'
+        },
+        {
+            type: 'input',
+            name: 'lastName',
+            message: 'Please enter the last name of the employee',
+        },
+        {
+            type: 'input',
+            name: 'roleId',
+            message: 'Please enter the employee\'s role ID'
+        },
+        {
+            type: 'input',
+            name: 'managerId',
+            message: 'Please enter the manager ID'
+        }
+    ]).then((answer) => {
+        const sql = `INSERT INTO employee (id, first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?, ?)`;
+        db.query(sql, [answer.employeeId, answer.firstName, answer.lastName, answer.roleId, answer.manaderId], (err, results) => {
+        if (err) {
+        console.log(err);
+        }
+        console.log('Employee created')
+        })
+        mainMenu()
+        })
+    }
 
 // Functions
 mainMenu();
