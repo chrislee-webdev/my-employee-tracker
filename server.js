@@ -137,7 +137,7 @@ const addRole = () => {
         {
             type: 'input',
             name: 'roleId',
-            message: 'What is the roleId?'
+            message: 'What is the role ID?'
         },
         {
             type: 'input',
@@ -152,7 +152,7 @@ const addRole = () => {
         {
             type: 'input',
             name: 'roleDepartment',
-            message: 'What is the departmentId for this?'
+            message: 'What is the department ID for this role?'
         },
     ]).then((answer) => {
         const sql = `INSERT INTO role (id, title, salary, department_id) VALUES (?, ?, ?, ?)`
@@ -169,11 +169,6 @@ const addRole = () => {
 // Create an employee
 const addEmployee = () => {
     return inquirer.prompt([
-        {
-            type: 'input',
-            name: 'employeeId',
-            message: 'Please enter employee ID'
-        },
         {
             type: 'input',
             name: 'firstName',
@@ -195,7 +190,7 @@ const addEmployee = () => {
             message: 'Please enter the manager ID'
         }
     ]).then((answer) => {
-        const sql = `INSERT INTO employee (id, first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?, ?)`;
+        const sql = `INSERT INTO employee ( first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)`;
         db.query(sql, [answer.employeeId, answer.firstName, answer.lastName, answer.roleId, answer.manaderId], (err, results) => {
         if (err) {
         console.log(err);
