@@ -1,33 +1,33 @@
 INSERT INTO department
-    (department_name)
+    (id, department_name)
     VALUES 
-    ('Human Resources'),
-    ('Accounting'),
-    ('Operations'),
-    ('Marketing'),
-    ('Sales')
+    (1, 'Human Resources'),
+    (2, 'Accounting'),
+    (3, 'Operations'),
+    (4, 'Marketing'),
+    (5, 'Sales');
 
-INSERT INTO roles
-    (id, title, salary, department_id)
+INSERT INTO role
+    (title, id, department_id, salary)
     VALUES
-    (1, 'HR Manager', 200, 1),
-    (2, 'HR Associate', 150, 1),
-    (3, 'Accounting Manager', 200, 2),
-    (4, 'Accouting Intern', 100, 2),
-    (5, 'Operations Manager', 200, 3),
-    (6, 'Operations Associate', 150 3),
-    (7, 'Digital Marketing Manager', 200, 4),
-    (8, 'Digital Marketing Associate', 150, 4),
-    (9, 'Sales Manager', 200, 5),
-    (10, 'Sales Associate', 150, 5)
+    ('HR Manager',1, 1, 200),
+    ('HR Associate',2 , 1, 150),
+    ('Accounting Manager', 3, 2, 200),
+    ('Accouting Intern', 4, 2, 100),
+    ('Operations Manager', 5, 3, 200),
+    ('Operations Associate', 6, 3, 150),
+    ('Digital Marketing Manager', 7, 4, 200),
+    ('Digital Marketing Associate', 8, 4, 150),
+    ('Sales Manager', 9, 5, 200),
+    ('Sales Associate', 10, 5, 150);
 
 INSERT INTO employee
-    (first_name, last_name, role_id, manager_id)
+    (id, first_name, last_name, role_id,    department_id, salary, manager_id)
     VALUES
-    ('Makoto', 'Street' 1, 1 ),
-    ('Harold', 'Chou', 8, 5),
-    ('Gwynedd', 'Lewis', 3, 3),
-    ('Danielle', 'Riley', 9, 9),
-    ('Sasha', 'Borysov', 10, 9)
+    (1, 'Jessie', 'Reese', 1, 1, 200, NULL),
+    (2, 'Clay', 'Snyder', 2, 1, 150, 1),
+    (3, 'Santos', 'Conner', 3, 2, 200, NULL),
+    (4, 'Jeffrey', 'Hudson', 4, 2, 100, 2),
+    (5, 'Kimberly', 'Harrison', 5, 3, 200, NULL);
 
 

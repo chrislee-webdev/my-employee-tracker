@@ -80,7 +80,7 @@ const viewAllDepartments = () => {
 
 // View all roles
 const viewAllRoles = () => {
-    const sql = `SELECT * FROM role`;
+    const sql = `SELECT * FROM roles`;
     db.query(sql, (err, row) => {
         if (err) {
             res.status(500).json({ error: err.message});
@@ -115,13 +115,13 @@ const addDepartment = () => {
         },
         {
             type: 'input',
-            name: 'departmentName',
+            name: 'departmentId',
             message: 'What is the name of the department?'
         }
     ]).then((answer) => {
         const sql = `INSERT INTO department (id,name) VALUES (?, ?)`;
         db.query(sql, [answer.id, 
-            answer.departmentName], (err, results) => {
+            answer.departmentId], (err, results) => {
             if (err) {
             console.log(err);
             }
@@ -191,7 +191,7 @@ const addEmployee = () => {
         }
     ]).then((answer) => {
         const sql = `INSERT INTO employee ( first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)`;
-        db.query(sql, [answer.employeeId, answer.firstName, answer.lastName, answer.roleId, answer.manaderId], (err, results) => {
+        db.query(sql, [answer.employeeId, answer.firstName, answer.lastName, answer.roleId, answer.managerId], (err, results) => {
         if (err) {
         console.log(err);
         }
