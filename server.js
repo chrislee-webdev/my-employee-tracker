@@ -81,9 +81,10 @@ const viewAllDepartments = () => {
 // View all roles
 const viewAllRoles = () => {
     const sql = 
-    `SELECT role.* , department.id AS department_name
+    `SELECT role.*, department.name
+    AS department
     FROM role
-    LEFT JOIN department ON role.department_id = department.id `;
+    LEFT JOIN department ON role.department_id = department.id`;
     db.query(sql, (err, row) => {
         if (err) {
             res.status(500).json({ error: err.message});
