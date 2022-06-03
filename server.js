@@ -58,8 +58,8 @@ const mainMenu = () => {
         if (select.mainMenu === 'Add employee') {
             addEmployee();
         }
-        if (select.mainMenu === 'Update employee role') {
-            updateEmployeeRole();
+        if (select.mainMenu === 'Exit') {
+            return;
         }
     })   
 }
@@ -81,7 +81,7 @@ const viewAllDepartments = () => {
 // View all roles
 const viewAllRoles = () => {
     const sql = 
-    `SELECT role.*, department.name
+    `SELECT role.id, role.title, role.salary, department.name
     AS department
     FROM role
     LEFT JOIN department ON role.department_id = department.id`;
@@ -97,7 +97,14 @@ const viewAllRoles = () => {
 
 // View all employees
 const viewAllEmployees = () => {
-    const sql = `SELECT * FROM employee`;
+    const sql = 
+    `SELECT employee.id, employee.first_name, employee.last_name, employee.manager_id, role.title
+    AS role
+    FROM employee
+    LEFT JOIN role ON employee.role_id = role.id;`
+    // SELECT employee.*, department.name
+    // FROM employee
+    // LEFT JOIN deparment ON employee.dept_id = department.id;`
     db.query(sql, (err, row) => {
         if (err) {
             res.status(500).json({ error: err.message});
@@ -194,8 +201,8 @@ const addEmployee = () => {
             message: 'Please enter the manager ID'
         }
     ]).then((answer) => {
-        const sql = `INSERT INTO employee ( first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)`;
-        db.query(sql, [answer.employeeId, answer.firstName, answer.lastName, answer.roleId, answer.managerId], (err, results) => {
+        const sql = `INSERT INTO employee ( id, first_name, last_name, role_id,  manager_id) VALUES (?, ?, ?, ?)`;
+        db.query(sql, [ answer.firstName, answer.lastName, answer.roleId, answer.managerId], (err, results) => {
         if (err) {
         console.log(err);
         }
@@ -204,6 +211,11 @@ const addEmployee = () => {
         mainMenu()
         })
     }
+
+//Update employee 
+const updateEmployeeRole = () => {
+
+}
 
 // Functions
 mainMenu();
