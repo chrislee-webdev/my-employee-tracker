@@ -36,7 +36,7 @@ const mainMenu = () => {
                 'Add department',
                 'Add role',
                 'Add employee',
-                'Update employee role'
+                'Exit'
             ]
         }
     ]).then((select) => {
