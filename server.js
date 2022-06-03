@@ -203,12 +203,17 @@ const addEmployee = () => {
         },
         {
             type: 'input',
-            name: 'managerId',
+            name: 'manager_id',
             message: 'Please enter the manager ID'
+        },
+        {
+            type: 'input',
+            name: 'dept_id',
+            message: 'Please enter the department ID'
         }
     ]).then((answer) => {
-        const sql = `INSERT INTO employee (employee_id, first_name, last_name, role_id,  manager_id) VALUES (?, ?, ?, ?, ?)`;
-        db.query(sql, [ answer.firstName, answer.lastName, answer.roleId, answer.managerId], (err, results) => {
+        const sql = `INSERT INTO employee (id, first_name, last_name, role_id,  manager_id, dept_id) VALUES (?, ?, ?, ?, ?, ?)`;
+        db.query(sql, [ answer.employee_id, answer.firstName, answer.lastName, answer.roleId, answer.manager_id, answer.dept_id], (err, results) => {
         if (err) {
         console.log(err);
         }
