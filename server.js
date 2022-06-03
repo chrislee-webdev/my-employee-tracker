@@ -137,8 +137,8 @@ const addDepartment = () => {
             console.log(err);
             }
             console.log('Department created');
-            })
             mainMenu();
+            })
         })
     }
 
@@ -171,15 +171,21 @@ const addRole = () => {
             if (err) {
                 console.log(err);
             }
-            console.log('Role created')
+            console.log('Role created');
+            mainMenu();
         }) 
-        mainMenu();
+        
     })
 }
 
 // Create an employee
 const addEmployee = () => {
     return inquirer.prompt([
+        {
+            type: 'input',
+            name: 'employee_id',
+            message: 'Please enter employee ID'
+        },
         {
             type: 'input',
             name: 'firstName',
@@ -201,30 +207,17 @@ const addEmployee = () => {
             message: 'Please enter the manager ID'
         }
     ]).then((answer) => {
-        const sql = `INSERT INTO employee ( id, first_name, last_name, role_id,  manager_id) VALUES (?, ?, ?, ?)`;
+        const sql = `INSERT INTO employee (employee_id, first_name, last_name, role_id,  manager_id) VALUES (?, ?, ?, ?, ?)`;
         db.query(sql, [ answer.firstName, answer.lastName, answer.roleId, answer.managerId], (err, results) => {
         if (err) {
         console.log(err);
         }
-        console.log('Employee created')
+        console.log('Employee created');
+        mainMenu();
         })
-        mainMenu()
-        })
-    }
-
-//Update employee 
-const updateEmployeeRole = () => {
+    })
 
 }
 
 // Functions
 mainMenu();
-
-// Default response for any other request (Not Found)
-// app.use((req, res) => {
-//     res.statusCode(404).end();
-// });
-
-// app.listen(PORT, () => {
-//     console.log(`Server running on port ${PORT}`);
-// });
